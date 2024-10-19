@@ -16,7 +16,7 @@ app = FastAPI()
 # Pydanticモデル
 class Result(BaseModel):
     name: str
-    score: str
+    score: int
 
 # 初回のテーブル作成
 def create_table():
