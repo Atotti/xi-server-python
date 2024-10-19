@@ -1,4 +1,5 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, Request
+from fastapi.templating import Jinja2Templates
 import sqlite3
 from pydantic import BaseModel
 
@@ -12,6 +13,9 @@ def get_db_connection():
 
 # FastAPIアプリケーションの作成
 app = FastAPI()
+
+# Jinja2のテンプレート設定
+templates = Jinja2Templates(directory="templates")
 
 # Pydanticモデル
 class Result(BaseModel):
@@ -53,4 +57,12 @@ def read_results():
     conn = get_db_connection()
     results = conn.execute("SELECT * FROM results ORDER BY score DESC").fetchall()
     conn.close()
-    return [{"id": item["id"], "name": item["name"], "score": item["score"], "timestamp": item["created_at"]} for item in results]
+    return [{"id": item["id"], "name": item["name"], "score": item["score"], "created_at": item["created_at"]} for item in results]
+
+@app.get("/ranking/")
+def get_ranking_page(request: Request):
+    conn = get_db_connection()
+    results = conn.execute("SELECT * FROM results ORDER BY score DESC").fetchall()
+
+    conn.close()
+    return templates.TemplateResponse("ranking.html", {"request": request, "results": results})
