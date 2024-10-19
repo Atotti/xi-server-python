@@ -1,13 +1,10 @@
 [project]
-name = "2024-seminar"
+name = "xi-server"
 version = "0.1.0"
-description = "seminar tmp repo"
+description = "xi-server"
 readme = "README.md"
 requires-python = ">=3.6"
 dependencies = [
-    "numpy",
-    "scipy",
-    "matplotlib",
-    "librosa",
-    "ipykernel>=5.5.6",
+    "fastapi",
+    "uvicorn",
 ]
