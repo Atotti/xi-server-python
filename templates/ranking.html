@@ -55,10 +55,50 @@
         .top-ranking {
             background-color: #f0da5d; /* ゴールド */
         }
+        .ranking-link {
+            display: inline-block;
+            background-color: #3498db;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 1.2em;
+            transition: background-color 0.3s ease;
+            text-align: center;
+        }
+
+        .ranking-link:hover {
+            background-color: #2980b9;
+            cursor: pointer;
+        }
+
+        /* Aboutリンクのスタイル */
+        .header-links {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: rgb(107, 134, 107);
+        }
+
+        .header-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.2em;
+            transition: color 0.3s ease;
+        }
+
+        .header-links a:hover {
+            color: #e0e0e0;
+        }
+
     </style>
 </head>
 <body>
     <div class="container">
+        <div class="header-links">
+            <a href="../about/" class="about-link">ゲームの説明を見る</a>
+        </div>
         <h1>THE D1CE スコアランキング</h1>
         <table>
             <thead>

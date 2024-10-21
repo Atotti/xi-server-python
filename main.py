@@ -102,12 +102,17 @@ def get_ranking_page(request: Request):
 
     return templates.TemplateResponse("ranking.html", {"request": request, "results": formatted_results})
 
+@app.get("/about/")
+def get_about_page(request: Request):
+    return templates.TemplateResponse("rule.html", {"request": request})
+
 app.mount("/static", StaticFiles(directory=webgl_build_path), name="static")
 
 @app.get("/")
 def read_index():
     # index.htmlを返す
     return FileResponse(os.path.join(webgl_build_path, "index.html"))
+
 
 class BrotliMiddleware(BaseHTTPMiddleware):
     async def dispatch(self, request, call_next):
