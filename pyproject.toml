@@ -5,6 +5,7 @@ description = "xi-server"
 readme = "README.md"
 requires-python = ">=3.6"
 dependencies = [
+    "aiofiles>=0.8.0",
     "fastapi",
     "jinja2>=3.0.3",
     "pytz>=2024.2",

@@ -2,19 +2,7 @@
 
 ## dev
 
-### Build
-
-```bash
-docker build -t xiserver .
-```
-
-### Run
-
-```bash
-docker run -d -p 8081:8000 xiserver
-```
-
-or
+develop in dev container.
 
 ```bash
 uvicorn main:app --reload

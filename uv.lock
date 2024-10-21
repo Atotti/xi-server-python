@@ -6,6 +6,15 @@ resolution-markers = [
 ]
 
 [[package]]
+name = "aiofiles"
+version = "0.8.0"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/10/ca/c416cfacf6a47e1400dad56eab85aa86c92c6fbe58447d12035e434f0d5c/aiofiles-0.8.0.tar.gz", hash = "sha256:8334f23235248a3b2e83b2c3a78a22674f39969b96397126cc93664d9a901e59", size = 14082 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/ca/e4/b78d049f7cc7ed053ddbfdd59b2dcc7bd387458e2c2869b602975685d65e/aiofiles-0.8.0-py3-none-any.whl", hash = "sha256:7a973fc22b29e9962d0897805ace5856e6a566ab1f0c8e5c91ff6c866519c937", size = 13925 },
+]
+
+[[package]]
 name = "asgiref"
 version = "3.7.2"
 source = { registry = "https://pypi.org/simple" }
@@ -248,6 +257,7 @@ name = "xi-server"
 version = "0.1.0"
 source = { virtual = "." }
 dependencies = [
+    { name = "aiofiles" },
     { name = "fastapi" },
     { name = "jinja2" },
     { name = "pytz" },
@@ -257,6 +267,7 @@ dependencies = [
 
 [package.metadata]
 requires-dist = [
+    { name = "aiofiles", specifier = ">=0.8.0" },
     { name = "fastapi" },
     { name = "jinja2", specifier = ">=3.0.3" },
     { name = "pytz", specifier = ">=2024.2" },

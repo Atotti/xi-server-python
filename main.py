@@ -1,12 +1,20 @@
 from fastapi import FastAPI, Request
 from fastapi.templating import Jinja2Templates
+from fastapi.responses import FileResponse
+from fastapi.staticfiles import StaticFiles
+from starlette.middleware.base import BaseHTTPMiddleware
 import sqlite3
 from pydantic import BaseModel
 from datetime import datetime
 import pytz
+import os
 
 # SQLite3データベースの接続を設定
-DATABASE = "/app/data/xiRanking.db"
+DATABASE = "./data/xiRanking.db" if os.getenv("ENV") == "development" else "/app/data/xiRanking.db"
+
+# UnityのWebGLビルドがあるディレクトリを指定
+webgl_build_path = "./xiBuildWebGL" if os.getenv("ENV") == "development" else "/app/xiBuildWebGL"
+
 
 def get_db_connection():
     conn = sqlite3.connect(DATABASE)
@@ -93,3 +101,20 @@ def get_ranking_page(request: Request):
     ]
 
     return templates.TemplateResponse("ranking.html", {"request": request, "results": formatted_results})
+
+app.mount("/static", StaticFiles(directory=webgl_build_path), name="static")
+
+@app.get("/")
+def read_index():
+    # index.htmlを返す
+    return FileResponse(os.path.join(webgl_build_path, "index.html"))
+
+class BrotliMiddleware(BaseHTTPMiddleware):
+    async def dispatch(self, request, call_next):
+        response = await call_next(request)
+        # Brotli圧縮ファイルへのリクエストを判定し、ヘッダーを付与
+        if request.url.path.endswith(".br"):
+            response.headers["Content-Encoding"] = "br"
+        return response
+
+app.add_middleware(BrotliMiddleware)
