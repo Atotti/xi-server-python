@@ -1,0 +1,11 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    image: xiserver
+    container_name: xiserver-container
+    ports:
+      - "8081:8000"
+    volumes:
+      - ./data:/app/data

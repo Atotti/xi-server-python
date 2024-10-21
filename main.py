@@ -6,7 +6,7 @@ from datetime import datetime
 import pytz
 
 # SQLite3データベースの接続を設定
-DATABASE = "xiRanking.db"
+DATABASE = "/app/data/xiRanking.db"
 
 def get_db_connection():
     conn = sqlite3.connect(DATABASE)
