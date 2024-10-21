@@ -2,6 +2,8 @@ from fastapi import FastAPI, Request
 from fastapi.templating import Jinja2Templates
 import sqlite3
 from pydantic import BaseModel
+from datetime import datetime
+import pytz
 
 # SQLite3データベースの接続を設定
 DATABASE = "xiRanking.db"
@@ -40,6 +42,20 @@ def create_table():
 
 create_table()
 
+def format_jst(datetime_utc):
+    # UTCからJSTへ変換
+    utc = pytz.utc
+    jst = pytz.timezone('Asia/Tokyo')
+
+    # 文字列をdatetimeに変換し、UTCとして解釈
+    utc_time = utc.localize(datetime.strptime(datetime_utc, "%Y-%m-%d %H:%M:%S"))
+
+    # JSTに変換
+    jst_time = utc_time.astimezone(jst)
+
+    # 指定のフォーマットに変換
+    return jst_time.strftime("%Y年%m月%d日 %H時%M分")
+
 @app.post("/result/")
 def create_item(item: Result):
     conn = get_db_connection()
@@ -63,6 +79,17 @@ def read_results():
 def get_ranking_page(request: Request):
     conn = get_db_connection()
     results = conn.execute("SELECT * FROM results ORDER BY score DESC").fetchall()
-
     conn.close()
-    return templates.TemplateResponse("ranking.html", {"request": request, "results": results})
+
+    # JSTに変換した結果を新しいリストに格納
+    formatted_results = [
+        {
+            "id": item["id"],
+            "name": item["name"],
+            "score": item["score"],
+            "created_at": format_jst(item["created_at"])
+        }
+        for item in results
+    ]
+
+    return templates.TemplateResponse("ranking.html", {"request": request, "results": formatted_results})

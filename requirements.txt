@@ -5,6 +5,7 @@ h11==0.13.0
 jinja2==3.0.3
 markupsafe==2.0.1
 pydantic==1.7.4
+pytz==2024.2
 starlette==0.14.2
 typing-extensions==4.1.1
 uvicorn==0.16.0

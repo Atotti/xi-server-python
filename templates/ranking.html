@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <title>DiceRoll web</title>
+    <title>THE D1CE web</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -73,7 +73,7 @@
                 {% for result in results %}
                 <tr class="{% if loop.index <= 5 %}top-ranking{% endif %}">
                     <td>{{ loop.index }}位</td>
-                    <td>{{ result.name }}</td>
+                    <td>{{ result.name | default("名無し") }}</td>
                     <td>{{ result.score }}</td>
                     <td>{{ result.created_at }}</td>
                 </tr>
